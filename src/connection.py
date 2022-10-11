@@ -14,12 +14,12 @@ class Connection:
         h = os.environ.get("DBHOST")
 
         conn = pymysql.connect(
-            # user=usr,
-            # password=pw,
-            # host=h,
-            user="root",
-            password="123456",
-            host="localhost",
+            user=usr,
+            password=pw,
+            host=h,
+            # user="root",
+            # password="123456",
+            # host="localhost",
             port=3306,
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=True
