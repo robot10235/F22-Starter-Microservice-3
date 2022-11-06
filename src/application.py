@@ -5,6 +5,7 @@ from mail_resource import MailResource
 from address_resource import AddressResource
 from phone_resource import PhoneResource
 from flask_cors import CORS
+from columbia_student_resource import StudentResource
 
 # Create the Flask application object.
 app = Flask(__name__,
@@ -13,6 +14,33 @@ app = Flask(__name__,
             template_folder='web/templates')
 
 CORS(app)
+
+
+@app.route("/api/students/class", methods=["GET"])
+def get_class():
+    result = StudentResource.get_class()
+    if result:
+        rsp = Response(json.dumps(result), status=200, content_type="application.json")
+    else:
+        rsp = Response("NOT FOUND", status=404, content_type="text/plain")
+
+
+@app.route("/api/students/<uni>/class", methods=["POST", "DELETE"])
+def get_enrollments_by_uni(uni):
+    if request.method == "POST":
+        data = request.get_json()
+        result = StudentResource.add_one(uni, data)
+        if result > 0:
+            rsp = Response("ADD OK", status=200, content_type="application.json")
+        else:
+            rsp = Response("NOT FOUND", status=404, content_type="text/plain")
+    else:
+        result = StudentResource.delete_by_uni(uni)
+        if result > 0:
+            rsp = Response("DELETE OK", status=200, content_type="application.json")
+        else:
+            rsp = Response("NOT FOUND", status=404, content_type="text/plain")
+    return rsp
 
 
 @app.route("/api/students/<uni>/addresses", methods=["GET", "POST", "DELETE"])

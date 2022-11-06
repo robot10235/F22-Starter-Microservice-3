@@ -1,37 +1,45 @@
-import pymysql
-
-import os
+from connection import Connection
 
 
-class ColumbiaStudentResource:
+class StudentResource:
 
     def __int__(self):
         pass
 
     @staticmethod
-    def _get_connection():
-
-        usr = os.environ.get("DBUSER")
-        pw = os.environ.get("DBPW")
-        h = os.environ.get("DBHOST")
-
-        conn = pymysql.connect(
-            user=usr,
-            password=pw,
-            host=h,
-            cursorclass=pymysql.cursors.DictCursor,
-            autocommit=True
-        )
-        return conn
+    def add_one(uni, data):
+        guid = uni
+        last_name = data.get('last_name', '')
+        first_name = data.get('first_name', '')
+        middle_name = data.get('middle_name', '')
+        school_code = data.get('school_code', '')
+        sql = f'INSERT INTO f22_databases_contacts.students \
+        (guid, last_name, first_name, middle_name, school_code) \
+        VALUES (\'{guid}\', \'{last_name}\', \'{first_name}\', \'{middle_name}\', \'{school_code}\');'
+        conn = Connection.get_connection()
+        cur = conn.cursor()
+        res = cur.execute(sql)
+        conn.commit()
+        conn.close()
+        return res
 
     @staticmethod
-    def get_by_key(key):
-
-        sql = "SELECT * FROM f22_databases.columbia_students where guid=%s";
-        conn = ColumbiaStudentResource._get_connection()
+    def delete_by_uni(uni):
+        sql = "DELETE FROM f22_databases_contacts.students WHERE guid=%s;"
+        conn = Connection.get_connection()
         cur = conn.cursor()
-        res = cur.execute(sql, args=key)
-        result = cur.fetchone()
+        res = cur.execute(sql, args=uni)
+        conn.commit()
+        conn.close()
+        return res
 
+    @staticmethod
+    def get_class():
+        sql = "SELECT * FROM f22_databases_contacts.students;"
+        conn = Connection.get_connection()
+        cur = conn.cursor()
+        res = cur.execute(sql)
+        result = cur.fetchall()
+        conn.commit()
+        conn.close()
         return result
-
