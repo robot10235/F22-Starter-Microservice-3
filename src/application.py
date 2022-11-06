@@ -23,7 +23,7 @@ def get_class():
         rsp = Response(json.dumps(result), status=200, content_type="application.json")
     else:
         rsp = Response("NOT FOUND", status=404, content_type="text/plain")
-
+    return rsp
 
 @app.route("/api/students/<uni>/class", methods=["POST", "DELETE"])
 def get_enrollments_by_uni(uni):
