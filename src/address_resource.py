@@ -1,4 +1,5 @@
 from connection import Connection
+import requests
 
 
 class AddressResource:
@@ -46,4 +47,20 @@ class AddressResource:
         conn.close()
         return res
 
+    @staticmethod
+    def is_valid_address(data):
+        street_No = data.get('street_No', '')
+        street_name = data.get('street_name', '')
+        city = data.get('city', '')
+        state = data.get('state', '')
+        country_code = data.get('country_code', '')
+        postal_code = data.get('postal_code', '')
+        url = 'https://us-street.api.smartystreets.com/street-address?' \
+              'auth-id=62b1879c-1836-d927-abad-019dc07b5b50&auth-token=7DwB3e0r3XBuDRdb4KLK' \
+              f'&street={street_No} {street_name}' \
+              f'&city={city}' \
+              f'&state={state}' \
+              f'&zipcode={postal_code}'
+        res = requests.get(url)
+        return res != '[]'
     # no need for update method

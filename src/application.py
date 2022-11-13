@@ -25,6 +25,7 @@ def get_class():
         rsp = Response("NOT FOUND", status=404, content_type="text/plain")
     return rsp
 
+
 @app.route("/api/students/<uni>/class", methods=["POST", "DELETE"])
 def get_enrollments_by_uni(uni):
     if request.method == "POST":
@@ -53,11 +54,14 @@ def get_address_by_uni(uni):
             rsp = Response("NOT FOUND", status=404, content_type="text/plain")
     elif request.method == "POST":
         data = request.get_json()
-        result = AddressResource.add_by_uni(uni, data)
-        if result > 0:
-            rsp = Response("ADD OK", status=200, content_type="application.json")
+        if AddressResource.is_valid_address(data):
+            rsp = Response("Wrong Address", status=200, content_type="application.json")
         else:
-            rsp = Response("NOT FOUND", status=404, content_type="text/plain")
+            result = AddressResource.add_by_uni(uni, data)
+            if result > 0:
+                rsp = Response("ADD OK", status=200, content_type="application.json")
+            else:
+                rsp = Response("NOT FOUND", status=404, content_type="text/plain")
     else:
         result = AddressResource.delete_by_uni(uni)
         if result > 0:
