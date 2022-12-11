@@ -12,7 +12,7 @@ class MailResource:
         conn = Connection.get_connection()
         cur = conn.cursor()
         res = cur.execute(sql, args=uni)
-        result = cur.fetchone()
+        result = cur.fetchall()
         conn.commit()
         conn.close()
         return result
