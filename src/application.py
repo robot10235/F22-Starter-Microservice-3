@@ -54,7 +54,7 @@ def get_address_by_uni(uni):
             rsp = Response("NOT FOUND", status=404, content_type="text/plain")
     elif request.method == "POST":
         data = request.get_json()
-        if AddressResource.is_valid_address(data):
+        if not AddressResource.is_valid_address(data):
             rsp = Response("Wrong Address", status=200, content_type="application.json")
         else:
             result = AddressResource.add_by_uni(uni, data)
