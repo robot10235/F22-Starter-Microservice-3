@@ -25,11 +25,11 @@ class AddressResource:
         street_name = data.get('street_name', '')
         city = data.get('city', '')
         state = data.get('state', '')
-        country_code = data.get('country_code', '')
+        county_code = data.get('county_code', '')
         postal_code = data.get('postal_code', '')
         sql = f'INSERT INTO f22_databases_contacts.addresses \
-        (guid, street_No, street_name, city, state, country_code, postal_code) \
-        VALUES (\'{uni}\', \'{street_No}\', \'{street_name}\', \'{city}\', \'{state}\', \'{country_code}\', \'{postal_code}\');'
+        (guid, street_No, street_name, city, state, county_code, postal_code) \
+        VALUES (\'{uni}\', \'{street_No}\', \'{street_name}\', \'{city}\', \'{state}\', \'{county_code}\', \'{postal_code}\');'
         conn = Connection.get_connection()
         cur = conn.cursor()
         res = cur.execute(sql)
