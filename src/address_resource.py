@@ -56,7 +56,7 @@ class AddressResource:
         country_code = data.get('country_code', '')
         postal_code = data.get('postal_code', '')
         url = 'https://us-street.api.smartystreets.com/street-address?' \
-              'auth-id=62b1879c-1836-d927-abad-019dc07b5b50&auth-token=7DwB3e0r3XBuDRdb4KLK' \
+              'auth-id=56c18d29-a3e6-ea5e-b580-548c757eb9a2&auth-token=rb43FXKZdB0JltNpTFy1' \
               f'&street={street_No} {street_name}' \
               f'&city={city}' \
               f'&state={state}' \
