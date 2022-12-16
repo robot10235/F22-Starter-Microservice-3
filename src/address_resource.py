@@ -62,5 +62,5 @@ class AddressResource:
               f'&state={state}' \
               f'&zipcode={postal_code}'
         res = requests.get(url)
-        return res != '[]'
+        return res.text != '[]'
     # no need for update method
